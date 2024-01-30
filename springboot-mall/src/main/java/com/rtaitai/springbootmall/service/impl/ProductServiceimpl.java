@@ -2,6 +2,7 @@ package com.rtaitai.springbootmall.service.impl;
 
 import com.rtaitai.springbootmall.constant.ProductCategory;
 import com.rtaitai.springbootmall.dao.ProductDao;
+import com.rtaitai.springbootmall.dto.ProductQueryParams;
 import com.rtaitai.springbootmall.dto.ProductRequest;
 import com.rtaitai.springbootmall.model.Product;
 import com.rtaitai.springbootmall.service.ProductService;
@@ -17,8 +18,8 @@ public class ProductServiceimpl implements ProductService {
     private ProductDao productDao;
 
     @Override
-    public List<Product> getProducts(ProductCategory category, String search) {
-        return productDao.getProducts(category, search);
+    public List<Product> getProducts(ProductQueryParams productQueryParams) {
+        return productDao.getProducts(productQueryParams);
     }
 
     @Override
