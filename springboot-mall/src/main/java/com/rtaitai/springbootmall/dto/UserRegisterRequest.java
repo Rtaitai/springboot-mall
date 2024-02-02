@@ -1,5 +1,6 @@
 package com.rtaitai.springbootmall.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -7,6 +8,7 @@ import lombok.Data;
 public class UserRegisterRequest {
 
     @NotBlank
+    @Email
     private String email;
 
     @NotBlank
