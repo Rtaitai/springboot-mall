@@ -1,6 +1,5 @@
 package com.rtaitai.springbootmall.dao;
 
-import com.rtaitai.springbootmall.constant.ProductCategory;
 import com.rtaitai.springbootmall.dto.ProductQueryParams;
 import com.rtaitai.springbootmall.dto.ProductRequest;
 import com.rtaitai.springbootmall.model.Product;
@@ -18,6 +17,8 @@ public interface ProductDao {
     Integer createProduct(ProductRequest productRequest);
 
     void updateProduct(Integer productId,ProductRequest productRequest);
+
+    void updateStock(Integer productId, Integer stock);
 
     void deleteProductById(Integer productId);
 }
