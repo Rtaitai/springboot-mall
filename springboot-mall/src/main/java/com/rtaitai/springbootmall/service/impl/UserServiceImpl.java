@@ -18,6 +18,8 @@ public class UserServiceImpl implements UserService {
 
     private final static Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
+    private static final String SALT = "salt";
+
     @Autowired
     private UserDao userDao;
 
@@ -38,7 +40,7 @@ public class UserServiceImpl implements UserService {
         }
 
         // 使用 MD5 生成密碼的雜湊值
-        String hashedPassword = DigestUtils.md5DigestAsHex(userRegisterRequest.getPassword().getBytes());
+        String hashedPassword = DigestUtils.md5DigestAsHex((userRegisterRequest.getPassword() + SALT).getBytes());
         userRegisterRequest.setPassword(hashedPassword);
 
         // 創建帳號
@@ -56,7 +58,7 @@ public class UserServiceImpl implements UserService {
         }
 
         // 使用 MD5 生成密碼的雜湊值
-        String hashedPassword = DigestUtils.md5DigestAsHex(userLoginRequest.getPassword().getBytes());
+        String hashedPassword = DigestUtils.md5DigestAsHex((userLoginRequest.getPassword() + SALT).getBytes());
 
         // 比較密碼
         if (user.getPassword().equals(hashedPassword)) {
