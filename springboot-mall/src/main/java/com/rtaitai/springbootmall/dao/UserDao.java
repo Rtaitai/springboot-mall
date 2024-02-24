@@ -1,5 +1,6 @@
 package com.rtaitai.springbootmall.dao;
 
+import com.rtaitai.springbootmall.dto.OrderQueryParams;
 import com.rtaitai.springbootmall.dto.UserRegisterRequest;
 import com.rtaitai.springbootmall.model.User;
 
