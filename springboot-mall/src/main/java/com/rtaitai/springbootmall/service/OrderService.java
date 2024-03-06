@@ -2,7 +2,8 @@ package com.rtaitai.springbootmall.service;
 
 import com.rtaitai.springbootmall.dto.CreateOrderRequest;
 import com.rtaitai.springbootmall.dto.OrderQueryParams;
-import com.rtaitai.springbootmall.model.Order;
+import com.rtaitai.springbootmall.entity.Order;
+import com.rtaitai.springbootmall.response.OrderResponse;
 
 import java.util.List;
 
@@ -14,5 +15,7 @@ public interface OrderService {
 
     Integer createOrder(Integer userId, CreateOrderRequest createOrderRequest);
 
-    Order getOrderById(Integer orderId);
+    OrderResponse getOrderById(Integer orderId);
+
+    List<Order> getOrdersByUserId(Integer userId);
 }

@@ -6,29 +6,34 @@ import com.rtaitai.springbootmall.dao.UserDao;
 import com.rtaitai.springbootmall.dto.BuyItem;
 import com.rtaitai.springbootmall.dto.CreateOrderRequest;
 import com.rtaitai.springbootmall.dto.OrderQueryParams;
-import com.rtaitai.springbootmall.model.Order;
+import com.rtaitai.springbootmall.entity.Order;
 import com.rtaitai.springbootmall.model.OrderItem;
 import com.rtaitai.springbootmall.model.Product;
 import com.rtaitai.springbootmall.model.User;
+import com.rtaitai.springbootmall.repository.OrderRepository;
+import com.rtaitai.springbootmall.response.OrderResponse;
 import com.rtaitai.springbootmall.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Service
 public class OrderServiceImpl implements OrderService {
 
     private final static Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     private OrderDao orderDao;
+
+    @Autowired
+    private OrderRepository orderRepository;
 
     @Autowired
     private ProductDao productDao;
@@ -46,15 +51,15 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getOrders(OrderQueryParams orderQueryParams) {
 
-        List<Order> orderList = orderDao.getOrders(orderQueryParams);
+//        List<Order> orderList = orderDao.getOrders(orderQueryParams);
+//
+//        for (Order order : orderList) {
+//            List<OrderItem> orderItemList = orderDao.getOrderItemsByOrderId(order.getOrderId());
+//
+//            order.setOrderItemList(orderItemList);
+//        }
 
-        for (Order order : orderList) {
-            List<OrderItem> orderItemList = orderDao.getOrderItemsByOrderId(order.getOrderId());
-
-            order.setOrderItemList(orderItemList);
-        }
-
-        return orderList;
+        return null;
     }
 
     @Transactional
@@ -109,14 +114,25 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order getOrderById(Integer orderId) {
+    public OrderResponse getOrderById(Integer orderId) {
 
-        Order order = orderDao.getOrderById(orderId);
+        Order order = orderRepository.findOrderByOrderId(orderId);
 
         List<OrderItem> orderItemList = orderDao.getOrderItemsByOrderId(orderId);
 
-        order.setOrderItemList(orderItemList);
+        return OrderResponse
+                .builder()
+                .orderId(order.getOrderId())
+                .userId(order.getUserId())
+                .totalAmount(order.getTotalAmount())
+                .createdDate(order.getCreatedDate())
+                .lastModifiedDate(order.getLastModifiedDate())
+                .orderItemList(orderItemList)
+                .build();
+    }
 
-        return order;
+    @Override
+    public List<Order> getOrdersByUserId(Integer userId) {
+        return orderRepository.findOrOrderByUserId(userId);
     }
 }

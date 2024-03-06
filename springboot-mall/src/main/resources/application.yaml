@@ -1,0 +1,31 @@
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/shop
+#    username: root
+#    password: 24126353
+#  jpa:
+#    hibernate:
+#      ddl-auto: update # 不自動新增欄位
+#  data:
+#    redis:
+#      repositories:
+#        enabled: false
+#      database: 0
+#      host: 127.0.0.1
+#      port: 6379
+#  mvc:
+#    view:
+#      suffix: .html
+#  thymeleaf:
+#    cache: false
+#    prefix: classpath:/templates/    # 設定去templates資料夾找html檔案
+#    suffix: .html
+#    encoding: UTF-8
+#    mode: HTML5
+#mybatis:
+#  mapper-locations: classpath*:mapper/*.xml
+#  type-aliases-package: com/rtaitai/springbootmall/entity
+
+
+

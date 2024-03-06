@@ -2,7 +2,8 @@ package com.rtaitai.springbootmall.controller;
 
 import com.rtaitai.springbootmall.dto.CreateOrderRequest;
 import com.rtaitai.springbootmall.dto.OrderQueryParams;
-import com.rtaitai.springbootmall.model.Order;
+import com.rtaitai.springbootmall.entity.Order;
+import com.rtaitai.springbootmall.response.OrderResponse;
 import com.rtaitai.springbootmall.service.OrderService;
 import com.rtaitai.springbootmall.util.Page;
 import jakarta.validation.Valid;
@@ -55,8 +56,17 @@ public class OrderController {
 
         Integer orderId = orderService.createOrder(userId, createOrderRequest);
 
-        Order order = orderService.getOrderById(orderId);
+        OrderResponse order = orderService.getOrderById(orderId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(order);
+    }
+
+    @GetMapping("/users/{userId}/order")
+    public ResponseEntity<?> getOrderByUserId(@PathVariable Integer userId) {
+
+//        Order order = orderService.findByUserId(userId);
+
+        List<Order> orderList = orderService.getOrdersByUserId(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(orderList);
     }
 }
