@@ -1,5 +1,6 @@
-package com.rtaitai.springbootmall.dto;
+package com.rtaitai.springbootmall.request;
 
+import com.rtaitai.springbootmall.dto.BuyItem;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 

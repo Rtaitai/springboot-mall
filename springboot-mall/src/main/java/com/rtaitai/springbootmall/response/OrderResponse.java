@@ -1,6 +1,6 @@
 package com.rtaitai.springbootmall.response;
 
-import com.rtaitai.springbootmall.model.OrderItem;
+import com.rtaitai.springbootmall.entity.OrderItem;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

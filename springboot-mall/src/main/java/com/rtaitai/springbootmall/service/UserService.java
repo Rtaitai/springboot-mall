@@ -1,7 +1,8 @@
 package com.rtaitai.springbootmall.service;
 
-import com.rtaitai.springbootmall.dto.UserLoginRequest;
-import com.rtaitai.springbootmall.dto.UserRegisterRequest;
+import com.rtaitai.springbootmall.request.UserLoginRequest;
+import com.rtaitai.springbootmall.request.UserRegisterRequest;
+import com.rtaitai.springbootmall.request.UserChangePasswordRequest;
 import com.rtaitai.springbootmall.model.User;
 
 public interface UserService {
@@ -11,4 +12,7 @@ public interface UserService {
     Integer register(UserRegisterRequest userRegisterRequest);
 
     User login(UserLoginRequest userLoginRequest);
+
+    User updateUserPassword(UserChangePasswordRequest userChangePasswordRequest);
+
 }

@@ -2,14 +2,15 @@ package com.rtaitai.springbootmall.service.impl;
 
 import com.rtaitai.springbootmall.dao.OrderDao;
 import com.rtaitai.springbootmall.dao.ProductDao;
-import com.rtaitai.springbootmall.dao.UserDao;
 import com.rtaitai.springbootmall.dto.BuyItem;
-import com.rtaitai.springbootmall.dto.CreateOrderRequest;
+import com.rtaitai.springbootmall.entity.User;
+import com.rtaitai.springbootmall.repository.OrderItemRepository;
+import com.rtaitai.springbootmall.repository.UserRepository;
+import com.rtaitai.springbootmall.request.CreateOrderRequest;
 import com.rtaitai.springbootmall.dto.OrderQueryParams;
 import com.rtaitai.springbootmall.entity.Order;
-import com.rtaitai.springbootmall.model.OrderItem;
+import com.rtaitai.springbootmall.entity.OrderItem;
 import com.rtaitai.springbootmall.model.Product;
-import com.rtaitai.springbootmall.model.User;
 import com.rtaitai.springbootmall.repository.OrderRepository;
 import com.rtaitai.springbootmall.response.OrderResponse;
 import com.rtaitai.springbootmall.service.OrderService;
@@ -39,34 +40,37 @@ public class OrderServiceImpl implements OrderService {
     private ProductDao productDao;
 
     @Autowired
-    private UserDao userDao;
+    private OrderItemRepository orderItemRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public Integer countOrder(OrderQueryParams orderQueryParams) {
 
-        return orderDao.countOrder(orderQueryParams);
+        return orderRepository.countOrder(orderQueryParams.getUserId());
 
     }
 
     @Override
     public List<Order> getOrders(OrderQueryParams orderQueryParams) {
 
-//        List<Order> orderList = orderDao.getOrders(orderQueryParams);
-//
-//        for (Order order : orderList) {
-//            List<OrderItem> orderItemList = orderDao.getOrderItemsByOrderId(order.getOrderId());
-//
-//            order.setOrderItemList(orderItemList);
-//        }
+        List<Order> orderList = orderRepository.findOrderByUserId(orderQueryParams.getUserId());
 
-        return null;
+        for (Order order : orderList) {
+            List<OrderItem> orderItemList = orderItemRepository.findOrderItemsByOrderId(order.getOrderId());
+
+            order.setOrderItemList(orderItemList);
+        }
+
+        return orderList;
     }
 
     @Transactional
     @Override
     public Integer createOrder(Integer userId, CreateOrderRequest createOrderRequest) {
         //檢查 user 是否存在
-        User user = userDao.getUserById(userId);
+        User user = userRepository.findUserByUserId(userId);
 
         if (user == null) {
             log.warn("該 userId {} 不存在", userId);
@@ -77,7 +81,9 @@ public class OrderServiceImpl implements OrderService {
         List<OrderItem> orderItemList = new ArrayList<>();
 
         for (BuyItem buyItem : createOrderRequest.getBuyItemList()) {
+
             Product product = productDao.getProductById(buyItem.getProductId());
+
 
             //檢查 product 是否存在、庫存是否足夠
             if (product == null) {
@@ -118,7 +124,7 @@ public class OrderServiceImpl implements OrderService {
 
         Order order = orderRepository.findOrderByOrderId(orderId);
 
-        List<OrderItem> orderItemList = orderDao.getOrderItemsByOrderId(orderId);
+        List<OrderItem> orderItemList = orderItemRepository.findOrderItemsByOrderId(orderId);
 
         return OrderResponse
                 .builder()
@@ -133,6 +139,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getOrdersByUserId(Integer userId) {
-        return orderRepository.findOrOrderByUserId(userId);
+        return orderRepository.findOrderByUserId(userId);
     }
 }

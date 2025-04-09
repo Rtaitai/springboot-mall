@@ -14,7 +14,7 @@ public interface OrderDao {
 
     Integer createOrder(Integer userId, Integer totalAmount);
 
-    void createOrderItems(Integer orderId, List<OrderItem> orderItemList);
+    void createOrderItems(Integer orderId, List<com.rtaitai.springbootmall.entity.OrderItem> orderItemList);
 
-    List<OrderItem> getOrderItemsByOrderId(Integer orderId);
+//    List<OrderItem> getOrderItemsByOrderId(Integer orderId);
 }

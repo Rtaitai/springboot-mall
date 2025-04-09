@@ -1,7 +1,7 @@
 package com.rtaitai.springbootmall.dao.impl;
 
 import com.rtaitai.springbootmall.dao.UserDao;
-import com.rtaitai.springbootmall.dto.UserRegisterRequest;
+import com.rtaitai.springbootmall.request.UserRegisterRequest;
 import com.rtaitai.springbootmall.model.User;
 import com.rtaitai.springbootmall.rowmapper.UserRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,5 +76,18 @@ public class UserDaoImpl implements UserDao {
         int userId = keyHolder.getKey().intValue();
 
         return userId;
+    }
+
+    @Override
+    public void updateUserPassword(String email, String password) {
+        String sql = "UPDATE user SET password = :password ,last_modified_date = :lastModifiedDate WHERE email = :email";
+        Map<String, Object> map = new HashMap<>();
+        map.put("email", email);
+        map.put("password", password);
+
+        Date now = new Date();
+        map.put("lastModifiedDate", now);
+
+        namedParameterJdbcTemplate.update(sql,map);
     }
 }

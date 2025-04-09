@@ -1,11 +1,11 @@
-package com.rtaitai.springbootmall.dto;
+package com.rtaitai.springbootmall.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class UserLoginRequest {
+public class UserChangePasswordRequest {
 
     @NotBlank
     @Email

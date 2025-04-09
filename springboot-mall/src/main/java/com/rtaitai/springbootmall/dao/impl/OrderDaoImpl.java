@@ -3,7 +3,7 @@ package com.rtaitai.springbootmall.dao.impl;
 import com.rtaitai.springbootmall.dao.OrderDao;
 import com.rtaitai.springbootmall.dto.OrderQueryParams;
 import com.rtaitai.springbootmall.model.Order;
-import com.rtaitai.springbootmall.model.OrderItem;
+import com.rtaitai.springbootmall.entity.OrderItem;
 import com.rtaitai.springbootmall.rowmapper.OrderItemRowMapper;
 import com.rtaitai.springbootmall.rowmapper.OrderRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,17 +134,17 @@ public class OrderDaoImpl implements OrderDao {
 //        }
 //    }
 
-    @Override
-    public List<OrderItem> getOrderItemsByOrderId(Integer orderId) {
-        String sql = "SELECT oi.order_item_id, oi.order_id, oi.product_id, oi.quantity, oi.amount, p.product_name, p.image_url FROM order_item as oi LEFT JOIN product as p ON oi.product_id = p.product_id WHERE oi.order_id = :orderId";
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("orderId", orderId);
-
-        List<OrderItem> orderItemList = namedParameterJdbcTemplate.query(sql, map, new OrderItemRowMapper());
-
-        return orderItemList;
-    }
+//    @Override
+//    public List<OrderItem> getOrderItemsByOrderId(Integer orderId) {
+//        String sql = "SELECT oi.order_item_id, oi.order_id, oi.product_id, oi.quantity, oi.amount, p.product_name, p.image_url FROM order_item as oi LEFT JOIN product as p ON oi.product_id = p.product_id WHERE oi.order_id = :orderId";
+//
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("orderId", orderId);
+//
+//        List<OrderItem> orderItemList = namedParameterJdbcTemplate.query(sql, map, new OrderItemRowMapper());
+//
+//        return orderItemList;
+//    }
 
     private String addFilteringSql(String sql, Map<String, Object> map, OrderQueryParams orderQueryParams) {
         if (orderQueryParams.getUserId() != null) {

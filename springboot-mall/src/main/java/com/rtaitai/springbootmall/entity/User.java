@@ -1,34 +1,32 @@
 package com.rtaitai.springbootmall.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Data
-@Table(name = "`order`")
+@Table(name = "user")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Order {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer orderId;
-
     private Integer userId;
 
-    private Integer totalAmount;
+    private String email;
+
+    private String password;
 
     private LocalDateTime createdDate;
 
     private LocalDateTime lastModifiedDate;
-
-    @Transient
-    private List<OrderItem> orderItemList;
-
-    private static final long serialVersionUID = 1L;
 }
