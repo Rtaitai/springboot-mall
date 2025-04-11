@@ -1,5 +1,6 @@
 package com.rtaitai.springbootmall.entity;
 
+import com.rtaitai.springbootmall.dto.OrderItemDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,7 +29,7 @@ public class Order {
     private LocalDateTime lastModifiedDate;
 
     @Transient
-    private List<OrderItem> orderItemList;
+    private List<OrderItemDto> orderItemList;
 
     private static final long serialVersionUID = 1L;
 }

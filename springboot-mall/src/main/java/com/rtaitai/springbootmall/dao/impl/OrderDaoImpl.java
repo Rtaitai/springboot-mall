@@ -2,9 +2,8 @@ package com.rtaitai.springbootmall.dao.impl;
 
 import com.rtaitai.springbootmall.dao.OrderDao;
 import com.rtaitai.springbootmall.dto.OrderQueryParams;
-import com.rtaitai.springbootmall.model.Order;
 import com.rtaitai.springbootmall.entity.OrderItem;
-import com.rtaitai.springbootmall.rowmapper.OrderItemRowMapper;
+import com.rtaitai.springbootmall.model.Order;
 import com.rtaitai.springbootmall.rowmapper.OrderRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;

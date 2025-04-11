@@ -5,7 +5,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,10 +29,5 @@ public class OrderItem {
     private Integer quantity;
 
     private Integer amount;
-
-
-    private String productName;
-
-    private String imageUrl;
 
 }

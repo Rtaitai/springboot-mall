@@ -1,8 +1,8 @@
 package com.rtaitai.springbootmall.dao;
 
 import com.rtaitai.springbootmall.dto.OrderQueryParams;
+import com.rtaitai.springbootmall.entity.OrderItem;
 import com.rtaitai.springbootmall.model.Order;
-import com.rtaitai.springbootmall.model.OrderItem;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public interface OrderDao {
 
     Integer createOrder(Integer userId, Integer totalAmount);
 
-    void createOrderItems(Integer orderId, List<com.rtaitai.springbootmall.entity.OrderItem> orderItemList);
+    void createOrderItems(Integer orderId, List<OrderItem> orderItemList);
 
 //    List<OrderItem> getOrderItemsByOrderId(Integer orderId);
 }

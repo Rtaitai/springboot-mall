@@ -1,17 +1,17 @@
 package com.rtaitai.springbootmall.service.impl;
 
-import com.rtaitai.springbootmall.dao.OrderDao;
 import com.rtaitai.springbootmall.dao.ProductDao;
 import com.rtaitai.springbootmall.dto.BuyItem;
-import com.rtaitai.springbootmall.entity.User;
-import com.rtaitai.springbootmall.repository.OrderItemRepository;
-import com.rtaitai.springbootmall.repository.UserRepository;
-import com.rtaitai.springbootmall.request.CreateOrderRequest;
+import com.rtaitai.springbootmall.dto.OrderItemDto;
 import com.rtaitai.springbootmall.dto.OrderQueryParams;
 import com.rtaitai.springbootmall.entity.Order;
 import com.rtaitai.springbootmall.entity.OrderItem;
+import com.rtaitai.springbootmall.entity.User;
 import com.rtaitai.springbootmall.model.Product;
+import com.rtaitai.springbootmall.repository.OrderItemRepository;
 import com.rtaitai.springbootmall.repository.OrderRepository;
+import com.rtaitai.springbootmall.repository.UserRepository;
+import com.rtaitai.springbootmall.request.CreateOrderRequest;
 import com.rtaitai.springbootmall.response.OrderResponse;
 import com.rtaitai.springbootmall.service.OrderService;
 import org.slf4j.Logger;
@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +30,6 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     private final static Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
-
-    @Autowired
-    private OrderDao orderDao;
 
     @Autowired
     private OrderRepository orderRepository;
@@ -58,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
         List<Order> orderList = orderRepository.findOrderByUserId(orderQueryParams.getUserId());
 
         for (Order order : orderList) {
-            List<OrderItem> orderItemList = orderItemRepository.findOrderItemsByOrderId(order.getOrderId());
+            List<OrderItemDto> orderItemList = orderItemRepository.findOrderItemsByOrderId(order.getOrderId());
 
             order.setOrderItemList(orderItemList);
         }
@@ -89,7 +87,7 @@ public class OrderServiceImpl implements OrderService {
             if (product == null) {
                 log.warn("商品 {} 不存在", buyItem.getProductId());
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-            } else if (product.getStock() < buyItem.getQuantity()){
+            } else if (product.getStock() < buyItem.getQuantity()) {
                 log.warn("商品 {} 庫存量不夠，無法購買。剩餘庫存 {} ，欲購買數量 {}", buyItem.getProductId(), product.getStock(), buyItem.getQuantity());
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
             }
@@ -112,9 +110,19 @@ public class OrderServiceImpl implements OrderService {
 
 
         // 創建訂單
-        Integer orderId = orderDao.createOrder(userId, totalAmount);
+        Order order = new Order();
+        order.setUserId(userId);
+        order.setTotalAmount(totalAmount);
+        order.setCreatedDate(LocalDateTime.now());
+        order.setLastModifiedDate(LocalDateTime.now());
 
-        orderDao.createOrderItems(orderId, orderItemList);
+        Order savedOrder = orderRepository.save(order);
+        Integer orderId = savedOrder.getOrderId();
+
+        for (OrderItem orderItem : orderItemList) {
+            orderItem.setOrderId(orderId);
+        }
+        orderItemRepository.saveAll(orderItemList);
 
         return orderId;
     }
@@ -124,7 +132,7 @@ public class OrderServiceImpl implements OrderService {
 
         Order order = orderRepository.findOrderByOrderId(orderId);
 
-        List<OrderItem> orderItemList = orderItemRepository.findOrderItemsByOrderId(orderId);
+        List<OrderItemDto> orderItemList = orderItemRepository.findOrderItemsByOrderId(orderId);
 
         return OrderResponse
                 .builder()

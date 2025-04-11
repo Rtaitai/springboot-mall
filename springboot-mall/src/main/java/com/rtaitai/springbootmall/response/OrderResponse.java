@@ -1,6 +1,6 @@
 package com.rtaitai.springbootmall.response;
 
-import com.rtaitai.springbootmall.entity.OrderItem;
+import com.rtaitai.springbootmall.dto.OrderItemDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,5 +25,5 @@ public class OrderResponse {
 
     private LocalDateTime lastModifiedDate;
 
-    private List<OrderItem> orderItemList;
+    private List<OrderItemDto> orderItemList;
 }
