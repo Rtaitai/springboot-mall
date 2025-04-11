@@ -1,15 +1,15 @@
 package com.rtaitai.springbootmall.service.impl;
 
-import com.rtaitai.springbootmall.dao.ProductDao;
 import com.rtaitai.springbootmall.dto.BuyItem;
 import com.rtaitai.springbootmall.dto.OrderItemDto;
 import com.rtaitai.springbootmall.dto.OrderQueryParams;
 import com.rtaitai.springbootmall.entity.Order;
 import com.rtaitai.springbootmall.entity.OrderItem;
+import com.rtaitai.springbootmall.entity.Product;
 import com.rtaitai.springbootmall.entity.User;
-import com.rtaitai.springbootmall.model.Product;
 import com.rtaitai.springbootmall.repository.OrderItemRepository;
 import com.rtaitai.springbootmall.repository.OrderRepository;
+import com.rtaitai.springbootmall.repository.ProductRepository;
 import com.rtaitai.springbootmall.repository.UserRepository;
 import com.rtaitai.springbootmall.request.CreateOrderRequest;
 import com.rtaitai.springbootmall.response.OrderResponse;
@@ -35,13 +35,13 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
 
     @Autowired
-    private ProductDao productDao;
-
-    @Autowired
     private OrderItemRepository orderItemRepository;
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     @Override
     public Integer countOrder(OrderQueryParams orderQueryParams) {
@@ -80,8 +80,7 @@ public class OrderServiceImpl implements OrderService {
 
         for (BuyItem buyItem : createOrderRequest.getBuyItemList()) {
 
-            Product product = productDao.getProductById(buyItem.getProductId());
-
+            Product product = productRepository.findProductByProductId(buyItem.getProductId());
 
             //檢查 product 是否存在、庫存是否足夠
             if (product == null) {
@@ -93,7 +92,8 @@ public class OrderServiceImpl implements OrderService {
             }
 
             // 扣除商品庫存
-            productDao.updateStock(product.getProductId(), product.getStock() - buyItem.getQuantity());
+            Integer newQuantity = product.getStock() - buyItem.getQuantity();
+            productRepository.updateStockByProductId(product.getProductId(), newQuantity);
 
             //計算總價錢
             int amount = buyItem.getQuantity() * product.getPrice();

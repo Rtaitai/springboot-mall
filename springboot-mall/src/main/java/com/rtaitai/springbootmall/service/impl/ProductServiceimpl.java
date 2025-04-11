@@ -1,10 +1,10 @@
 package com.rtaitai.springbootmall.service.impl;
 
-import com.rtaitai.springbootmall.constant.ProductCategory;
 import com.rtaitai.springbootmall.dao.ProductDao;
 import com.rtaitai.springbootmall.dto.ProductQueryParams;
 import com.rtaitai.springbootmall.dto.ProductRequest;
 import com.rtaitai.springbootmall.model.Product;
+import com.rtaitai.springbootmall.repository.ProductRepository;
 import com.rtaitai.springbootmall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,8 +17,13 @@ public class ProductServiceimpl implements ProductService {
     @Autowired
     private ProductDao productDao;
 
+    @Autowired
+    private ProductRepository productRepository;
+
     @Override
     public Integer countProduct(ProductQueryParams productQueryParams) {
+
+//        return productRepository.countProduct(productQueryParams);
         return productDao.countProduct(productQueryParams);
     }
 
