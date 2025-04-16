@@ -3,7 +3,7 @@ package com.rtaitai.springbootmall.controller;
 import com.rtaitai.springbootmall.request.UserLoginRequest;
 import com.rtaitai.springbootmall.request.UserRegisterRequest;
 import com.rtaitai.springbootmall.request.UserChangePasswordRequest;
-import com.rtaitai.springbootmall.model.User;
+import com.rtaitai.springbootmall.entity.User;
 import com.rtaitai.springbootmall.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

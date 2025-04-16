@@ -3,7 +3,7 @@ package com.rtaitai.springbootmall.service;
 import com.rtaitai.springbootmall.request.UserLoginRequest;
 import com.rtaitai.springbootmall.request.UserRegisterRequest;
 import com.rtaitai.springbootmall.request.UserChangePasswordRequest;
-import com.rtaitai.springbootmall.model.User;
+import com.rtaitai.springbootmall.entity.User;
 
 public interface UserService {
 
