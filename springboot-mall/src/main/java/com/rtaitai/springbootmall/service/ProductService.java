@@ -1,9 +1,8 @@
 package com.rtaitai.springbootmall.service;
 
-import com.rtaitai.springbootmall.constant.ProductCategory;
 import com.rtaitai.springbootmall.dto.ProductQueryParams;
 import com.rtaitai.springbootmall.dto.ProductRequest;
-import com.rtaitai.springbootmall.model.Product;
+import com.rtaitai.springbootmall.entity.Product;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ public interface ProductService {
 
     Integer createProduct(ProductRequest productRequest);
 
-    void updateProduct(Integer  productId,ProductRequest productRequest);
+    void updateProduct(Integer productId,ProductRequest productRequest);
 
     void deleteProductById(Integer productId);
 }

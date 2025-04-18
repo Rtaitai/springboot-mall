@@ -3,7 +3,7 @@ package com.rtaitai.springbootmall.controller;
 import com.rtaitai.springbootmall.constant.ProductCategory;
 import com.rtaitai.springbootmall.dto.ProductQueryParams;
 import com.rtaitai.springbootmall.dto.ProductRequest;
-import com.rtaitai.springbootmall.model.Product;
+import com.rtaitai.springbootmall.entity.Product;
 import com.rtaitai.springbootmall.service.ProductService;
 import com.rtaitai.springbootmall.util.Page;
 import jakarta.validation.Valid;
@@ -90,7 +90,7 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
-        productService.updateProduct(productId,productRequest);
+        productService.updateProduct(productId, productRequest);
 
         Product updatedProduct = productService.getProductById(productId);
 
